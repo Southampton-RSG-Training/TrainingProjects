@@ -1,0 +1,21 @@
+Vagrant::Config.run do |config|
+
+  # Set the box type
+  config.vm.box = "precise32"
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+
+  # Use :ansible to provision
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "provision.yml"
+  end
+
+  config.vm.forward_port 8124, 8124
+  config.ssh.forward_agent = true
+end
+
+Vagrant.configure("2") do |config|
+  # Sync the lessons and test workshops to the VM
+  config.vm.synced_folder "../Lessons/", "/Materials/Lessons"
+  config.vm.synced_folder "../WorkshopTests/", "/Materials/WorkshopTests"
+  config.vm.synced_folder "../Templates/", "/Materials/Templates"
+end
