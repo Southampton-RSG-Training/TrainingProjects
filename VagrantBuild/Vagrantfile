@@ -1,8 +1,7 @@
 Vagrant::Config.run do |config|
 
   # Set the box type
-  config.vm.box = "precise32"
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.box = "hashicorp/bionic64"
 
   # Use :ansible to provision
   config.vm.provision :ansible do |ansible|
@@ -15,6 +14,7 @@ end
 
 Vagrant.configure("2") do |config|
   # Sync the lessons and test workshops to the VM
+  # TODO: Keep checking if WSL2 has support for shared folders: https://github.com/hashicorp/vagrant/issues/11705
   config.vm.synced_folder "../Lessons/", "/Materials/Lessons"
   config.vm.synced_folder "../WorkshopTests/", "/Materials/WorkshopTests"
   config.vm.synced_folder "../Templates/", "/Materials/Templates"
