@@ -3,20 +3,47 @@
   become: yes
   tasks:
     - name: Install build tools via apt
-      apt:
+      ansible.builtin.apt:
         pkg:
           - build-essential
           - git
-          - ruby2.7.1
+          - ruby
+          - ruby-dev
         state: present
-    - name: Install build tools via gem
-      community.general.gem:
-        name:
-          - github-pages
-          - bundler
-          - kramdown
-          - kramdown-parser-gfm
+
+    - name: get rvm 1 of 4
+      get_url:
+        url: https://rvm.io/pkuczynski.asc
+        dest: /tmp/temp.asc
+    - name: get rvm 2 of 4
+      command: "cat /tmp/rvm.asc | gpg2 --import - "
+    - name: get rvm 3 of 4
+      get_url:
+        url: https://get.rvm.io
+        dest: /tmp/temp.io
+    - name: get rvm 4 of 4
+      command: "cat /tmp/rvm.io | bash -s stable"
+
+    - name: Install github-pages gem
+      gem:
+        name: github-pages
         state: present
+
+    - name: Install bundler gem
+      gem:
+        name: bundler
+        state: present
+
+    - name: Install kramdown gem
+      gem:
+        name: kramdown
+        state: present
+
+    - name: Install kramdown-parser-gfm gem
+      gem:
+        name: kramdown-parser-gfm
+        state: present
+
     - name: Install build tools via pip
       ansible.builtin.pip:
         name:
