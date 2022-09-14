@@ -9,20 +9,8 @@
           - git
           - ruby
           - ruby-dev
+          - python3-pip
         state: present
-
-    - name: get rvm 1 of 4
-      get_url:
-        url: https://rvm.io/pkuczynski.asc
-        dest: /tmp/temp.asc
-    - name: get rvm 2 of 4
-      command: "cat /tmp/rvm.asc | gpg2 --import - "
-    - name: get rvm 3 of 4
-      get_url:
-        url: https://get.rvm.io
-        dest: /tmp/temp.io
-    - name: get rvm 4 of 4
-      command: "cat /tmp/rvm.io | bash -s stable"
 
     - name: Install github-pages gem
       gem:
@@ -58,6 +46,7 @@
           - python-dateutil
           - lxml
           - favicons
+
     - name: Install R build requirements
       ansible.builtin.command: |
         Rscript renv/activate.R
