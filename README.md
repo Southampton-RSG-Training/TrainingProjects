@@ -37,8 +37,6 @@ server and finally pops the snapshot to restore the VM to a 'clean' ready state.
 ### Windows
 #### Warning for WSL users: Currently shared folders are not supported in WSL. WSL is currently not supported see below.
 
-
-
 On prompt allow access to public and private networks. 
 
 Note the SSH address and username.
@@ -50,7 +48,6 @@ Note the SSH address and username.
 ### WSL
 
 Install vagrant on WSL using apt/yum/snap/from-source
-
 
 Vagrant Documentation on WSL:
 [https://www.vagrantup.com/docs/other/wsl](https://www.vagrantup.com/docs/other/wsl)

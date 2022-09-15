@@ -10,6 +10,7 @@
           - ruby
           - ruby-dev
           - python3-pip
+          - r-base
         state: present
 
     - name: Install github-pages gem
@@ -48,6 +49,16 @@
           - favicons
 
     - name: Install R build requirements
-      ansible.builtin.command: |
-        Rscript renv/activate.R
-        Rscript -e 'renv::restore()'
+      ansible.builtin.apt:
+        pkg:
+          - r-cran-knitr
+          - r-cran-shiny
+          - r-cran-tidyverse
+        state: present
+
+# This is the 'R' way to do things and takes 30+ mins
+#    - name: Install R build requirements
+#      ansible.builtin.command: /usr/bin/Rscript -e "{{item}}"
+#      with_items:
+#        - install.packages('renv')
+#        - renv::restore()
