@@ -1,35 +1,36 @@
 ---
 - hosts: all
   become: yes
+  roles:
+    - { role: geerlingguy.ruby,
+        ruby_install_from_source: true,
+        ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.6.tar.gz,
+        ruby_version: 2.7.6,
+        ruby_install_bundler: true
+    }
   tasks:
     - name: Install build tools via apt
       ansible.builtin.apt:
         pkg:
           - build-essential
           - git
-          - ruby
-          - ruby-dev
           - python3-pip
           - r-base
+          - jekyll
         state: present
 
     - name: Install github-pages gem
-      gem:
+      community.general.gem:
         name: github-pages
         state: present
 
-    - name: Install bundler gem
-      gem:
-        name: bundler
-        state: present
-
     - name: Install kramdown gem
-      gem:
+      community.general.gem:
         name: kramdown
         state: present
 
     - name: Install kramdown-parser-gfm gem
-      gem:
+      community.general.gem:
         name: kramdown-parser-gfm
         state: present
 
