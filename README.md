@@ -20,26 +20,60 @@ local build using vagrant.
 bash ./configure-remotes.sh
 ~~~
 
-For users familiar with vagrant/have vagrant installed simply run else see the platform specific documentation below.
+We use Vagrant with the provider VirtualBox provisioned using Ansible. This automatically creates an inventory suitable
+fo launching further jobs. However, deploying a lesson is a one liner
+
+The following command will build the vagrant machine and run the jekyll server with auto-reload.
 
 ~~~bash
-cd VagrantBuild
-vagrant up
+bash ./build-local.sh <local path to lesson>
 ~~~
 
-Vagrant uses the provider VirtualBox and is provisioned using Ansible. This automatically creates an inventory suitable 
-fo launching further jobs. 
+e.g. to build the python lesson 
 
-The script build-local.sh snapshots the VM runs Ansible to build and serve a lesson then when commanded kills the lesson
-server and finally pops the snapshot to restore the VM to a 'clean' ready state.
+~~~bash
+bash ./build-local.sh Lessons/python-novice
+~~~
 
-Access the server at 
+_Please note the first time you run this script the vm is provisioned and this takes 10-20 minutes. Following builds are 
+much faster._
+
+
+The script snapshots the VM, runs lesson server untill reciving ctrl-c, and finally pops the snapshot to restore the VM 
+to a 'clean' ready state. so another lesson can be built.
+
+Access the site in a browser using the following:
 ~~~
 http://localhost/8124/
 ~~~
 
+**Do not try to build multiple lessons simultaneously, I havent tested it and bad things will happen. I _may_ look into 
+this in the future.**
 
-## Platform specific notes, contributions welcome via issues or PRs
+## Common issues 
+### _contributions welcome via issues or PRs_
+
+Problems:
+If vagrant times out/hangs on ssh on an initial build
+or,
+If the virtual machine stops working
+then,
+
+~~~bash
+cd VagrantBuild
+vagrant destroy
+vagrant up
+~~~
+
+If you want to poke at the VM:
+
+~~~bash
+cd VagrantBuild
+vagrant ssh
+~~~
+
+## Platform specific notes, 
+### _contributions welcome via issues or PRs_
 
 ### Windows
 #### Warning for WSL users: Currently shared folders are not supported in WSL. WSL is currently not supported see below.
