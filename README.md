@@ -33,19 +33,26 @@ fo launching further jobs.
 The script build-local.sh snapshots the VM runs Ansible to build and serve a lesson then when commanded kills the lesson
 server and finally pops the snapshot to restore the VM to a 'clean' ready state.
 
+Access the server at 
+~~~
+http://localhost/8124/
+~~~
+
+
+## Platform specific notes, contributions welcome via issues or PRs
 
 ### Windows
 #### Warning for WSL users: Currently shared folders are not supported in WSL. WSL is currently not supported see below.
 
-On prompt allow access to public and private networks. 
-
-Note the SSH address and username.
+On prompt allow access to public and private networks.
 
 ### Mac
 
 ### Linux
 
 ### WSL
+
+This is unsupported, PR welcome if fixes are available.
 
 Install vagrant on WSL using apt/yum/snap/from-source
 
