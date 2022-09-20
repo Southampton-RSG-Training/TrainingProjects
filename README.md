@@ -1,8 +1,26 @@
-## This is a meta repository for developers who want to work on writing lessons.
+# This is a meta repository for developers who want to work on writing/developing lessons.
 
-### General
 
-To get started, configure git with ssh access, 'user.name', and 'user.email' on your local machine. 
+## Overview
+
+This repo contains scripts that download a set of the training repositories developed in the GitHub Organisation 
+Southampton-RSG-Training. 
+
+The initial shell script configure-remotes.sh clones and sorts each of the lesson, 
+workshop-test, and templates this takes some time and requires a significant amount of space ~7Gb.
+
+The second script is used to create a live server in a Vagrant VM. This opens vm and runs jekyll serve to create a 
+server with live reload this means one can edit the documents live and see the updates in 'real time'. This requires
+Vagrant and Virtualbox present on the host system, installation details are provided in 'VagrantBuild/README.md'.
+
+## Running the Scripts
+
+### Checkout this repo
+
+To get started, configure git with SSH access, 'user.name', and 'user.email' on your local machine. 
+
+For configuring SSH access see these 
+[GitHub Docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
 
 Clone this repository:
 
@@ -10,15 +28,23 @@ Clone this repository:
 git clone git@github.com:Southampton-RSG-Training/TrainingProjects.git
 ~~~
 
-Optional: Open configure remotes and remove lessons/templates that you will not want to work on.
+### Download the other repos
 
-Run the shell script configure-remotes.sh. This clones (or pulls) listed training projects into folders and 
-sets up the template remotes. In addition, it also downloads the Vagrant Build directory that has a virtual machine 
-local build using vagrant.
+Optional: Open configure-remotes.sh and remove lessons/templates that you will not want to work on, this helps save 
+space.
+
+Run the shell script configure-remotes.sh. This clones (or pulls) listed training projects into a preconfigured folders 
+structure. It then adds the [remote template](https://github.com/Southampton-RSG-Training/lesson-template) which allows 
+for efficient updating of the build scripts and other boilerplate. In addition, it also downloads the Vagrant Build 
+directory that contains the tools to launch a local live update development server via a Vagrant vm. 
+
+_Note: This can take a long time ~10 minutes and take up several Gb of space_
 
 ~~~ bash
 bash ./configure-remotes.sh
 ~~~
+
+### Start a live server
 
 We use Vagrant with the provider VirtualBox provisioned using Ansible. This automatically creates an inventory suitable
 fo launching further jobs. However, deploying a lesson is a one liner
@@ -39,7 +65,7 @@ _Please note the first time you run this script the vm is provisioned and this t
 much faster._
 
 
-The script snapshots the VM, runs lesson server untill reciving ctrl-c, and finally pops the snapshot to restore the VM 
+The script snapshots the VM, runs lesson server until receiving ctrl-c, and finally pops the snapshot to restore the VM 
 to a 'clean' ready state. so another lesson can be built.
 
 Access the site in a browser using the following:
@@ -47,10 +73,10 @@ Access the site in a browser using the following:
 http://localhost/8124/
 ~~~
 
-**Do not try to build multiple lessons simultaneously, I havent tested it and bad things will happen. I _may_ look into 
+**Do not try to build multiple lessons simultaneously, I haven't tested it and bad things will happen. I _may_ look into 
 this in the future.**
 
-## Common issues 
+# Common issues 
 ### _contributions welcome via issues or PRs_
 
 Problems:
