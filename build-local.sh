@@ -6,7 +6,7 @@ cd VagrantBuild
 vagrant_state=$(vagrant status --machine-readable | grep ',state,')
 IFS=',' read -ra state_array <<< $vagrant_state
 
-if [ ${state_array[3]} != "running" ];
+if [ "${state_array[3]}" != "running" ];
 then
   echo "Vagrant not running, bringing up, if unprovisioned this may take a few minutes"
   vagrant up
