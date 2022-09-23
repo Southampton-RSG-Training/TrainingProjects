@@ -21,8 +21,6 @@ RSYNC_PID=$!
 # Do the RSG python/R pre build, the sed command is required to make deployment from windows work.
 vagrant ssh -c "cd /Materials/$1; pwd; sed -i 's/\r$//' bin/build_me.sh; bash bin/build_me.sh"
 
-
-
 # Build the site.
 vagrant ssh -c "cd /Materials/$1; bundler install; bundler exec jekyll serve --baseurl='' --host=0.0.0.0 --port=8124 --livereload --livereload-port=8125"
 
