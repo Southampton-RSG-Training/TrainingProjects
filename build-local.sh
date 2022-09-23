@@ -1,4 +1,3 @@
-
 echo "Building and deploying $1 to Vagrant"
 
 cd VagrantBuild
@@ -15,10 +14,15 @@ fi
 # Snapshot the VM blank state to restore later
 vagrant snapshot push
 
-# do the RSG python/R pre build
-vagrant ssh -c "cd /Materials/$1; pwd; bash bin/build_me.sh"
+# Make sure files are in sync
 vagrant rsync-auto &
 RSYNC_PID=$!
+
+# Do the RSG python/R pre build, the sed command is required to make deployment from windows work.
+vagrant ssh -c "cd /Materials/$1; pwd; sed -i 's/\r$//' bin/build_me.sh; bash bin/build_me.sh"
+
+read -p 'Press any key to continue'
+
 # Build the site.
 vagrant ssh -c "cd /Materials/$1; bundler install; bundler exec jekyll serve --baseurl='' --host=0.0.0.0 --port=8124 --livereload --livereload-port=8125"
 kill $RSYNC_PID

@@ -26,10 +26,7 @@ Vagrant.configure("2") do |config|
 
     # Sync the lessons and test workshops to the VM
     # TODO: Keep checking if WSL2 has support for shared folders: https://github.com/hashicorp/vagrant/issues/11705
-    config.vm.synced_folder "../Lessons/", "/Materials/Lessons", type: "rsync",
-        rsync__exclude: ".git/"
-    config.vm.synced_folder "../WorkshopTests/", "/Materials/WorkshopTests", type: "rsync",
-        rsync__exclude: ".git/"
-    config.vm.synced_folder "../Templates/", "/Materials/Templates", type: "rsync",
-        rsync__exclude: ".git/"
+    config.vm.synced_folder "../Lessons/", "/Materials/Lessons", type: "rsync"
+    config.vm.synced_folder "../WorkshopTests/", "/Materials/WorkshopTests", type: "rsync"
+    config.vm.synced_folder "../Templates/", "/Materials/Templates", type: "rsync"
 end
