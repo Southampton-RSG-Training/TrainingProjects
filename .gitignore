@@ -1,5 +1,5 @@
-Lessons/**/
-Templates/**/
-WorkshopTests/**/
+Lessons/
+Templates/
+WorkshopTests/
 .idea/
 VagrantBuild/.vagrant/
