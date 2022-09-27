@@ -26,8 +26,9 @@ vagrant ssh -c "cd /Materials/$1; bundler install; bundler exec jekyll serve --b
 
 read -p 'Press any key to start file cleanup'
 
+echo "" > .gitmodules
 rm setup.md
-rm -r _site/ collections/ _includes/rsg/*-lesson/ slides/ _includes/ submodules/
+rm -r _site/ collections/ _includes/rsg/*-lesson/ _includes/ submodules/
 
 read -p 'Press any key to end rsync and restore the snapshot'
 
