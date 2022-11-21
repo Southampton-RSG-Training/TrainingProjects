@@ -17,6 +17,7 @@
           - python3-pip
           - r-base
           - jekyll
+          - sshfs
         state: present
 
     - name: Install github-pages gem
@@ -42,6 +43,7 @@
           - pyyaml==5.3.1
           - requests
           - beautifulsoup4
+          - GitPython
           - git_root
           - pandas
           - html5lib
@@ -56,6 +58,12 @@
           - r-cran-shiny
           - r-cran-tidyverse
         state: present
+
+#    - name: Synchronization using rsync protocol (pull)
+#      ansible.posix.synchronize:
+#        mode: pull
+#        src: 10.0.2.2/{{}}/_episodes
+#        dest: /Materials/{{}}/_episodes
 
 # This is the 'R' way to do things and takes 30+ mins
 #    - name: Install R build requirements
