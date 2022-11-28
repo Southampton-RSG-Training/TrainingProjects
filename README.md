@@ -106,6 +106,9 @@ vagrant ssh
 
 On prompt allow access to public and private networks.
 
+
+
+
 ### Mac
 
 ### Linux

@@ -1,5 +1,6 @@
 Lessons/
 Templates/
 WorkshopTests/
+install_rsync/
 .idea/
 VagrantBuild/.vagrant/

@@ -45,7 +45,7 @@ abs_path=$(get_abs_filename ../$ep_path)
 # remove files from intended mount point
 vagrant ssh -c "rm ~/Materials/$ep_path/*; rm ~/Materials/$ep_path/.gitkeep"
 vagrant ssh -c "sudo sshfs -o allow_other,default_permissions 10.0.2.2:~/$abs_path ~/Materials/$ep_path"
-#vagrant rsync ../$1_episodes/ LessonBox:~/Materials/$1_episodes/
+
 
 # Do the RSG python/R pre build, the sed command is required to make deployment from windows work.
 echo ssh -c "cd ~/Materials/$1; pwd; sed -i 's/\r$//' bin/build_me.sh; bash bin/build_me.sh"
