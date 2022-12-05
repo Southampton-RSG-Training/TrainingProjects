@@ -79,6 +79,8 @@ abs_path=$(get_abs_filename ../$ep_path)
 # remove files from intended mount point
 vagrant ssh -c "rm ~/Materials/$ep_path*; rm ~/Materials/$ep_path.gitkeep"
 
+mkdir -p tmp
+
 if [[ $simple_os_type == "WIN" ]]; then
     # Windows
     # use a template to create a task to pass into the scheduler
@@ -88,9 +90,14 @@ if [[ $simple_os_type == "WIN" ]]; then
     pid_for_hack=$!
     echo we are going to kill $pid_for_hack later
 else
-  # Sane OSes, start an rsync cronjob to run:
-  echo "*/5 * * * * * rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'" > tmp/rsync_task.sh
-  crontab -e tmp/rsync_task.sh
+  # cron can't run every 5 seconds so we will switch to inotify
+  # Sane OSes, start an file watch using inotify and on change run:
+  rsync_command="rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'"
+  rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'
+  echo "fswatch -0 -r -i -o '.*\.md\$' --event 14 $abs_path/ | xargs -0 -n 1 -I {} $rsync_command" > tmp/fswatch_task.sh
+  bash tmp/fswatch_task.sh &
+  pid_for_fswatch=$!
+  echo we will kill $pid_for_fswatch later
 fi
 
 sleep 10
@@ -110,11 +117,12 @@ if [[ $simple_os_type == "WIN" ]]; then
     # In windows we need to kill the hack
     kill $pid_for_hack
 else
-    # In sane OS we need to kill the cronjob
-    crontab -r rsync_task.sh
+    # In sane OS we need to kill the watch
+    kill $pid_for_fswatch
 fi
 
-rm .ssh_info.tmp tmp/rsync_task.sh tmp/rsync_log.txt
+rm .ssh_info.tmp tmp/rsync_task.sh tmp/rsync_log.txt tmp/fswatch_task.sh
+rmdir tmp
 
 # Restore the vm to the snapshot
 vagrant snapshot pop
