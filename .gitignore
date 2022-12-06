@@ -2,5 +2,6 @@ Lessons/
 Templates/
 WorkshopTests/
 install_rsync/
+install_fswatch/
 .idea/
 VagrantBuild/.vagrant/
