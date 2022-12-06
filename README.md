@@ -13,6 +13,45 @@ The second script is used to create a live server in a Vagrant VM. This opens vm
 server with live reload this means one can edit the documents live and see the updates in 'real time'. This requires
 Vagrant and Virtualbox present on the host system, installation details are provided in 'VagrantBuild/README.md'.
 
+Whilst care has been taken to create a set of tools that work on windows the experience is much better on MacOS and 
+Linux. 
+
+### Before you start
+
+You will require the following software. 
+
+- A terminal (bash)
+- Vagrant
+- Rsync*
+- FSwatch*
+- Git
+- An IDE (IntelliJ recommended for templating workflow)
+
+*With some differences between platforms
+
+#### Windows
+
+Windows causes a lot of headaches by not supporting many of the 'standard' unix tools. 
+
+Terminal: GitBash (https://gitforwindows.org)
+Rsync: Requires a custom installation, see install_rsync_windows.sh
+In a nutshell this downloads and extracts msys packages and dumps the executables into the git bash install.
+FSwatch: Not supported as it requires GCC see install_fswatch_source.sh
+
+#### MacOS
+Git:
+~~~
+% xcode-select --install
+~~~
+FSwatch:
+~~~
+% brew install fswatch
+~~~
+
+#### Linux
+
+FSWatch, please install with your preferred package manager.
+
 ## Running the Scripts
 
 ### Checkout this repo
@@ -105,9 +144,6 @@ vagrant ssh
 #### Warning for WSL users: Currently shared folders are not supported in WSL. WSL is currently not supported see below.
 
 On prompt allow access to public and private networks.
-
-
-
 
 ### Mac
 

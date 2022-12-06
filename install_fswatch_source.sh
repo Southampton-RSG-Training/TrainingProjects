@@ -7,3 +7,4 @@ curl -L -O https://github.com/emcrisostomo/fswatch/releases/download/1.17.1/fswa
 
 tar -xvzf fswatch-1.17.1.tar.gz
 
+# now we would need gcc
