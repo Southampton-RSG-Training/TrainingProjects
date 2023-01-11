@@ -23,8 +23,8 @@ tar -xf libzstd.pkg.tar
 gitpath="/c/Program Files/Git"
 
 
-#for file in $(find usr -type f )
-#do
-#  mkdir -p "$gitpath/$(dirname $file)"
-#  cp $file "$gitpath/$file"
-#done
+for file in $(find usr -type f )
+do
+  mkdir -p "$gitpath/$(dirname $file)"
+  cp $file "$gitpath/$file"
+done
