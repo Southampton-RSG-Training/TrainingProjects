@@ -12,7 +12,7 @@ curl -L http://repo.msys2.org/msys/x86_64/libzstd-1.5.2-2-x86_64.pkg.tar.zst --o
 # files)
 # /c/Program\ Files/zstd-v1.5.2-win64/zstd-v1.5.2-win64/zstd
 # else if it is in path just use zstd like normal
-/c/Program\ Files/zstd-v1.5.2-win64/zstd-v1.5.2-win64/zstd -d *.tar.zst
+/c/Program\ Files/zstd-v1.5.2-win64/zstd -d *.tar.zst
 # zstd -d *.tar.zst
 
 tar -xf rsync.pkg.tar
