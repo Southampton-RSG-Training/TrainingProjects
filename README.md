@@ -33,6 +33,12 @@ You will require the following software.
 
 Windows causes a lot of headaches by not supporting many of the 'standard' unix tools. 
 
+If zstd is not in your GitBash path then it may need to be manually installed for the install_rsync_windows script
+https://facebook.github.io/zstd/. Where this is the case the line 'zstd -d *.tar.zst' in install_rsync_windows will need
+to be run manually.
+
+
+
 Terminal: GitBash (https://gitforwindows.org)
 Rsync: Requires a custom installation, see install_rsync_windows.sh
 In a nutshell this downloads and extracts msys packages and dumps the executables into the git bash install.
