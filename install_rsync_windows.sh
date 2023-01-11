@@ -11,7 +11,7 @@ curl -L http://repo.msys2.org/msys/x86_64/libzstd-1.5.2-2-x86_64.pkg.tar.zst --o
 # Set the location of your zstd if you have locally installed zstd (the following is correct if it is placed in program
 # files)
 # /c/Program\ Files/zstd-v1.5.2-win64/zstd-v1.5.2-win64/zstd
-/c/Program\ Files/zstd-v1.5.2-win64/zstd-v1.5.2-win64/zstd -d *.tar.zst
+/c/Program\ Files/zstd-v1.5.2-win64/zstd -d *.tar.zst
 
 tar -xf rsync.pkg.tar
 tar -xf libxxhash.pkg.tar
