@@ -21,7 +21,7 @@ Linux.
 You will require the following software. 
 
 - A terminal (bash)
-- Vagrant
+- Vagrant (and virtualbox)
 - Rsync*
 - FSwatch*
 - Git

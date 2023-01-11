@@ -11,12 +11,16 @@ curl -L http://repo.msys2.org/msys/x86_64/libzstd-1.5.2-2-x86_64.pkg.tar.zst --o
 # Set the location of your zstd if you have locally installed zstd (the following is correct if it is placed in program
 # files)
 # /c/Program\ Files/zstd-v1.5.2-win64/zstd-v1.5.2-win64/zstd
+# else if it is in path just use zstd like normal
 /c/Program\ Files/zstd-v1.5.2-win64/zstd-v1.5.2-win64/zstd -d *.tar.zst
+# zstd -d *.tar.zst
 
 tar -xf rsync.pkg.tar
 tar -xf libxxhash.pkg.tar
 tar -xf liblz4.pkg.tar
 tar -xf libzstd.pkg.tar
+
+
 
 
 # This is the path to the git bash install
