@@ -22,5 +22,10 @@
 			"path": "./Templates/"
 		}
 	],
-	"settings": {}
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"eamodio.gitlens"
+		],
+	}
 }
