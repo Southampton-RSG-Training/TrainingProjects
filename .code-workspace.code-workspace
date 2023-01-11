@@ -1,0 +1,26 @@
+{
+	"folders": [
+		// Main folder
+		{
+			"name": "TrainingProjects",
+			"path": "."
+		},
+		// All the lessons
+		{
+			"name": "Lessons",
+			"path": "./Lessons"
+		},
+
+		// All the workshops
+		{
+			"name": "Workshops",
+			"path": "./WorkshopTests"
+		},
+		// All the templates
+		{
+			"name": "Templates",
+			"path": "./Templates/"
+		}
+	],
+	"settings": {}
+}
