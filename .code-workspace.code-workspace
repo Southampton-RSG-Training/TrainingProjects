@@ -22,7 +22,10 @@
 			"path": "./Templates/"
 		}
 	],
-	"settings": {},
+	"settings": {
+		"git.autofetch": "all",
+		"git.autofetchPeriod": 60
+	},
 	"extensions": {
 		"recommendations": [
 			"eamodio.gitlens"
