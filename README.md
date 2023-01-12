@@ -25,7 +25,7 @@ You will require the following software.
 - Rsync*
 - FSwatch*
 - Git
-- An IDE (IntelliJ recommended for templating workflow)
+- An IDE (IntelliJ or VSCode recommended for templating workflow)
 
 *With some differences between platforms
 
