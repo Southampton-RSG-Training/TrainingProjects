@@ -1,6 +1,7 @@
 Lessons/
 Templates/
 WorkshopTests/
+WorkshopDeployments/
 install_rsync/
 install_fswatch/
 .idea/

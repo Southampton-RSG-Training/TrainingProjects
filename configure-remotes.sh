@@ -1,6 +1,7 @@
 mkdir -p "Lessons"
 mkdir -p "Templates"
 mkdir -p "WorkshopTests"
+mkdir -p "WorkshopDeployments"
 
 # Move to the lessons directory
 cd Lessons
@@ -65,5 +66,24 @@ do
   git clone "git@github.com:Southampton-RSG-Training/${REPONAME}.git" || (git -C "$REPONAME" pull)
   # add the template
   git -C "$REPONAME" remote add template "git@github.com:Southampton-RSG-Training/workshop-template.git" || echo "Template already exists"
+  git -C "$REPONAME" fetch --all
+done
+
+
+# go back to ~/TrainingProjects (or wherever you put TrainingProjects)
+cd ..
+
+cd WorkshopDeployments
+# define any deployed workshops that need debugging
+REPOLIST=(
+"Doctoral-College-03-23"
+)
+
+# # loop over the workshop tests clone/pull, add template if needed, and fetch on all branches.
+for REPONAME in "${REPOLIST[@]}";
+do
+  # clone the repo if it is absent else pull from the remote
+  git clone "git@github.com:SRSG-Workshops/${REPONAME}.git" || (git -C "$REPONAME" pull)
+  # Template will have already been attached so just fetch all
   git -C "$REPONAME" fetch --all
 done

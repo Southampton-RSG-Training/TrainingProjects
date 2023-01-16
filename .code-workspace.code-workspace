@@ -20,6 +20,11 @@
 		{
 			"name": "Templates",
 			"path": "./Templates/"
+		},
+		// Deployed Workshops
+		{
+			"name": "Deployments",
+			"path": "./WorkshopDeployments"
 		}
 	],
 	"settings": {
