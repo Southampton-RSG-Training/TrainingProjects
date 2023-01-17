@@ -9,6 +9,17 @@
         ruby_install_bundler: true
     }
   tasks:
+    - name: Add an Apt signing key for rbase
+      ansible.builtin.command: 'apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9'
+
+    - name: Add an Apt signing key for cran
+      ansible.builtin.command: 'sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+'
+
+    - name: Add specified repository into sources list
+      ansible.builtin.apt_repository:
+        repo: deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/
+        state: present
+
     - name: Install build tools via apt
       ansible.builtin.apt:
         pkg:
@@ -16,6 +27,9 @@
           - git
           - python3-pip
           - r-base
+          - r-base-core
+          - r-recommended
+          - r-base-dev
           - jekyll
           - sshfs
         state: present
@@ -57,7 +71,15 @@
           - r-cran-knitr
           - r-cran-shiny
           - r-cran-tidyverse
+          - r-cran-rcppeigen
         state: present
+    
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #One day
 
 #    - name: Synchronization using rsync protocol (pull)
 #      ansible.posix.synchronize:
