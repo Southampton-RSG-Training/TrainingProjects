@@ -10,6 +10,7 @@ cd Lessons
 # define the full set of lessons
 REPOLIST=(
 "r-novice"
+"r-novice-md"
 "git-novice"
 "python-novice"
 "shell-novice"

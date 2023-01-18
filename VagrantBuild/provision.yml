@@ -32,6 +32,8 @@
           - r-base-dev
           - jekyll
           - sshfs
+          - libcurl4-openssl-dev
+          - libxml2-dev
         state: present
 
     - name: Install github-pages gem

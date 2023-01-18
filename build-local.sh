@@ -93,7 +93,7 @@ if [[ $rsync_on == 1 ]]; then
       # use a template to create a task to pass into the scheduler
       # Windows run this hack
       echo "rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'" > tmp/rsync_task.sh
-      bash rsync_while_loop.sh & >> tmp/rsync_log.txt
+      bash rsync_while_loop.sh &
       pid_for_hack=$!
       echo we are going to kill $pid_for_hack later
   else
