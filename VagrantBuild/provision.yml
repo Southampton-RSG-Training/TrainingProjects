@@ -9,12 +9,11 @@
         ruby_install_bundler: true
     }
   tasks:
-    - name: Add an Apt signing key for rbase
-      ansible.builtin.command: 'apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9'
-
-    - name: Add an Apt signing key for cran
-      ansible.builtin.command: 'sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+'
-
+    - name: Install gems using a Gemfile in another directory
+      community.general.bundler:
+        state: present
+        gemfile: /vagrant/Gemfile
+        
     - name: Add specified repository into sources list
       ansible.builtin.apt_repository:
         repo: deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/
@@ -26,10 +25,6 @@
           - build-essential
           - git
           - python3-pip
-          - r-base
-          - r-base-core
-          - r-recommended
-          - r-base-dev
           - jekyll
           - sshfs
           - libcurl4-openssl-dev
@@ -67,31 +62,9 @@
           - lxml
           - favicons
 
-    - name: Install R build requirements
-      ansible.builtin.apt:
-        pkg:
-          - r-cran-knitr
-          - r-cran-shiny
-          - r-cran-tidyverse
-          - r-cran-rcppeigen
-        state: present
-    
     - name: Update and upgrade apt packages
       become: true
       apt:
         upgrade: yes
         update_cache: yes
         cache_valid_time: 86400 #One day
-
-#    - name: Synchronization using rsync protocol (pull)
-#      ansible.posix.synchronize:
-#        mode: pull
-#        src: 10.0.2.2/{{}}/_episodes
-#        dest: /Materials/{{}}/_episodes
-
-# This is the 'R' way to do things and takes 30+ mins
-#    - name: Install R build requirements
-#      ansible.builtin.command: /usr/bin/Rscript -e "{{item}}"
-#      with_items:
-#        - install.packages('renv')
-#        - renv::restore()

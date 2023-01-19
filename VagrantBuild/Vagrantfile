@@ -25,16 +25,4 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 8125, host: 8125
 
     config.ssh.forward_agent = true
-
-
-
-    # Sync the lessons and test workshops to the VM
-    # TODO: Keep checking if WSL2 has support for shared folders:
-    # https://github.com/hashicorp/vagrant/issues/11705
-    # https://github.com/hashicorp/vagrant/issues/11623
-    # for lesson in Dir.glob('*/', base: "../Lessons")
-    #     config.vm.synced_folder "../Lessons/#{lesson}_episodes/", "/Materials/Lessons/#{lesson}_episodes/", type: "rsync", rsync__auto: true
-    # end
-    # config.vm.synced_folder "../WorkshopTests/", "/Materials/WorkshopTests", type: "rsync", rsync__auto: false
-    # config.vm.synced_folder "../Templates/", "/Materials/Templates", type: "rsync", rsync__auto: false
 end

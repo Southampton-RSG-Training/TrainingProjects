@@ -63,8 +63,8 @@ fi
 echo ssh -c "mkdir -p ~/Materials/$containing_dir"
 vagrant ssh -c "mkdir -p ~/Materials/$containing_dir"
 # Copy the files required to build the lesson to the vm.
-echo scp ../$1 LessonBox:~/Materials/$1
-vagrant scp ../$1 LessonBox:~/Materials/$1
+echo scp ../"$1" LessonBox:~/Materials/"$containing_dir"
+vagrant scp ../"$1" LessonBox:~/Materials/"$containing_dir"
 
 # get absolute path to the input episodes
 get_abs_filename() {
