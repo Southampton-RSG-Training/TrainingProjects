@@ -13,11 +13,6 @@
       community.general.bundler:
         state: present
         gemfile: /vagrant/Gemfile
-        
-    - name: Add specified repository into sources list
-      ansible.builtin.apt_repository:
-        repo: deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/
-        state: present
 
     - name: Install build tools via apt
       ansible.builtin.apt:
