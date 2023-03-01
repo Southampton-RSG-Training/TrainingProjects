@@ -26,7 +26,18 @@ if [ "$1" = "" ]; then
     exit
 fi
 
-echo "Building and deploying $1 to Vagrant"
+if [ "$2" = "" ]; then
+  if [[ $simple_is_type != "OSX" ]]; then
+    provisioner="virtualbox"
+  else
+    provisioner="vmware_fusion"
+    vagrant plugin install vagrant-vmware-desktop
+  fi
+else
+  provisioner=$2
+fi
+
+echo "Building and deploying $1 to Vagrant using $provisioner"
 
 cd VagrantBuild
 
@@ -45,7 +56,6 @@ vagrant ssh-config > .ssh_info.tmp
 lessonbox_ip=$(grep 'HostName' .ssh_info.tmp | cut -d " " -f 4)
 lessonbox_port=$(grep 'Port' .ssh_info.tmp | cut -d " " -f 4)
 lessonbox_user=$(grep -w 'User' .ssh_info.tmp | cut -d " " -f 4)
-
 
 vagrant plugin install vagrant-scp
 
@@ -92,15 +102,15 @@ if [[ $rsync_on == 1 ]]; then
       # Windows
       # use a template to create a task to pass into the scheduler
       # Windows run this hack
-      echo "rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'" > tmp/rsync_task.sh
+      echo "rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/$provisioner/private_key'" > tmp/rsync_task.sh
       bash rsync_while_loop.sh &
       pid_for_hack=$!
       echo we are going to kill $pid_for_hack later
   else
     # cron can't run every 5 seconds so we will switch to inotify
     # Sane OSes, start an file watch using inotify and on change run:
-    rsync_command="rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'"
-    rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'
+    rsync_command="rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/$provisioner/private_key'"
+    rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e "ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/$provisioner/private_key"
     echo "fswatch -0 -r -i -o '.*\.md\$' --event 14 $abs_path/ | xargs -0 -n 1 -I {} $rsync_command" > tmp/fswatch_task.sh
     bash tmp/fswatch_task.sh &
     pid_for_fswatch=$!
@@ -117,7 +127,6 @@ vagrant ssh -c "cd ~/Materials/$1; pwd; sed -i 's/\r$//' bin/build_me.sh; bash b
 ## Build the site.
 echo ssh -c "cd ~/Materials/$1; bundler install; bundler exec jekyll serve --baseurl='' --host=0.0.0.0 --port=8124 --livereload --livereload-port=8125"
 vagrant ssh -c "cd ~/Materials/$1; bundler install; bundler exec jekyll serve --baseurl='' --host=0.0.0.0 --port=8124 --livereload --livereload-port=8125"
-
 
 read -p 'Press any key to bring the test server down restore the snapshot'
 
