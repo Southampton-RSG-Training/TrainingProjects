@@ -28,7 +28,18 @@ if [ "$1" = "" ]; then
     exit
 fi
 
-echo "Dry run of $1 to Vagrant"
+if [ "$2" = "" ]; then
+  if [[ $simple_is_type != "OSX" ]]; then
+    provisioner="virtualbox"
+  else
+    provisioner="vmware_fusion"
+    vagrant plugin install vagrant-vmware-desktop
+  fi
+else
+  provisioner=$2
+fi
+
+echo "Dry run of $1 to Vagrant using $provisioner"
 
 cd VagrantBuild
 
@@ -94,15 +105,15 @@ if [[ $rsync_on == 1 ]]; then
       # Windows
       # use a template to create a task to pass into the scheduler
       # Windows run this hack
-      echo echo "rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'" > tmp/rsync_task.sh
+      echo echo "rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/$provisioner/private_key'" > tmp/rsync_task.sh
       echo bash rsync_while_loop.sh & >> tmp/rsync_log.txt
       echo pid_for_hack=$!
       echo echo we are going to kill $pid_for_hack later
   else
     # cron can't run every 5 seconds so we will switch to inotify
     # Sane OSes, start an file watch using inotify and on change run:
-    echo rsync_command="rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'"
-    echo rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/virtualbox/private_key'
+    echo rsync_command="rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e 'ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/$provisioner/private_key'"
+    echo rsync -r $abs_path/ $lessonbox_user@$lessonbox_ip:~/Materials/$ep_path -e "ssh -p $lessonbox_port -i .vagrant/machines/LessonBox/$provisioner/private_key"
     echo echo "fswatch -0 -r -i -o '.*\.md\$' --event 14 $abs_path/ | xargs -0 -n 1 -I {} $rsync_command" > tmp/fswatch_task.sh
     echo bash tmp/fswatch_task.sh &
     echo pid_for_fswatch=$!
