@@ -27,11 +27,10 @@ if [ "$1" = "" ]; then
 fi
 
 if [ "$2" = "" ]; then
-  if [[ $simple_is_type != "OSX" ]]; then
+  if [[ $simple_os_type != "OSX" ]]; then
     provisioner="virtualbox"
   else
     provisioner="vmware_fusion"
-    vagrant plugin install vagrant-vmware-desktop
   fi
 else
   provisioner=$2
